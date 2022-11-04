@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <title>Dashboard</title>
+</head>
+<body>
+    Welcome to dashboard
+
+    <div class="earnings">
+        <!--form action="" method="post"-->
+            {% csrf_token %}
+            <label for="monthly_earning">Monthly Earnings</label>
+            <input type="number" name="monthly_earning" id="monthly_earning"><br>
+            
+            <label for="monthly_expenses">Monthly Expenses</label>
+            <input type="number" name="monthly_expenses" id="monthly_expenses"><br>
+            
+            <label for="monthly_savings">Monthly Savings</label>
+            <input type="number" name="monthly_savings" id="monthly_savings"><br>
+
+            <button  type="submit" id="getChart" onclick="display_chart()">Get the visual</button>
+        <!/form-->
+        <!--{% autoescape off %}
+        {{ graph }}
+        {% endautoescape %}-->
+    </div>
+
+    <div>
+        <canvas id="myChart" style="width:50%;max-width:600px"></canvas>
+    </div>
+    
+    <script>
+        function display_chart(){
+            var xValues = ["Monthly Expenses", "Monthly Savings"];
+            var yValues = [document.getElementById("monthly_expenses").value, document.getElementById("monthly_savings").value];
+            var barColors = [
+                "#b91d47",
+                "#00aba9",
+                "#2b5797",
+                "#e8c3b9",
+                "#1e7145"
+            ];
+
+            new Chart("myChart", {
+                type: "bar",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        backgroundColor: barColors,
+                        data: yValues
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "World Wide Wine Production 2018"
+                    }
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
+
+
+<!--
+
+    1. items in which the expenses were made
+    2. additional income
+    3. type of income(acquired or earned)
+    4. expenses in different currencies, if any
+    4. exchange rate
+
+
+
+-->

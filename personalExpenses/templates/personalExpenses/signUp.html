@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign-up</title>
+</head>
+<body>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="form-control">
+                <label for="username">What would like to be called?</label>
+                <input type="text" class="form-control" name="username" id="username" aria-describedby="usernamehelpertxt">
+                <small id="usernamehelpertxt">Please choose a unique username</small>
+            </div>
+            <div class="form-control">
+                <label for="occupatiom">What do you do?</label>
+                <input type="text" class="form-control" name="occupation" id="occupation">
+        
+            </div>
+            <div class="form-control">
+                <label for="password1">Choose a strong password</label>
+                <input type="password" class="form-control" name="password1" id="password1">
+        
+            </div>
+            <div class="form-control">
+                <label for="password2">Confirm your password</label>
+                <input type="password" class="form-control" name="password2" id="password2">
+            </div>
+            <button type="submit" class="btn btn-primary">SignUp</button>
+        </form>
+</body>
+</html>
