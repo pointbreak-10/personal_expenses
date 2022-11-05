@@ -1,19 +1,24 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <script type='type/javascript' src="{% static 'personalExpenses/functions.js' %}"></script> 
+    <!-- js file not working. why?-->
     <title>Dashboard</title>
 </head>
 <body>
     Welcome to dashboard
 
-    <div class="earnings">
-        <!--form action="" method="post"-->
+    <div class="earnings" style="border: 2px solid black;">
+            <h3>Savings and Expenses</h3>
             {% csrf_token %}
+            
             <label for="monthly_earning">Monthly Earnings</label>
             <input type="number" name="monthly_earning" id="monthly_earning"><br>
             
@@ -23,19 +28,41 @@
             <label for="monthly_savings">Monthly Savings</label>
             <input type="number" name="monthly_savings" id="monthly_savings"><br>
 
-            <button  type="submit" id="getChart" onclick="display_chart()">Get the visual</button>
-        <!/form-->
-        <!--{% autoescape off %}
-        {{ graph }}
-        {% endautoescape %}-->
+            <button id="getChart" onclick="display_chart1()">Get the visual</button><br>
+            
+            <canvas id="myChart1" style="width:50%;max-width:600px; height: 50%; max-height: 300px;"></canvas>        
+    </div> <br><br>
+
+    <div class="detailed_expenses" style="border: 2px solid black;">
+        <!-- for detailed  monthly exepnses-->
+        <h3>Detailed Expenses</h3>
+        {% csrf_token %}
+        <h5>Select the applicable field and add the value next to it</h5>
+        
+        
+        <input type="checkbox" name="home_rent" id="home_rent" value="Home rent">
+        <label for="home_rent">Home Rent</label>
+        <input type="number" id="home_rent_expenses"><br>
+        
+        
+        <input type="checkbox" name="food_expenses" id="food_expenses" value="Food Expenses">
+        <label for="food_expenses">Food Expenses</label>
+        <input type="number" id="food_expenses_value"><br>
+
+        
+        <input type="checkbox" name="travel_expenses" id="travel_expenses">
+        <label for="travel_expenses">Travel Expenses</label>
+        <input type="number" id="travel_expense_value"><br>
+
+        <button id="getChart" onclick="display_chart2()">Get the visual</button><br>
+        <canvas id="myChart2" style="width:50%;max-width:600px; height: 50%; max-height: 300px;"></canvas>
+
     </div>
 
-    <div>
-        <canvas id="myChart" style="width:50%;max-width:600px"></canvas>
-    </div>
-    
+
+
     <script>
-        function display_chart(){
+        function display_chart1(){
             var xValues = ["Monthly Expenses", "Monthly Savings"];
             var yValues = [document.getElementById("monthly_expenses").value, document.getElementById("monthly_savings").value];
             var barColors = [
@@ -46,7 +73,37 @@
                 "#1e7145"
             ];
 
-            new Chart("myChart", {
+            new Chart("myChart1", {
+                type: "pie",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        backgroundColor: barColors,
+                        data: yValues
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "Savings and Expenses"
+                    }
+                }
+            });
+        }
+
+        function display_chart2(){
+            var xValues = ["Home Rent", "Food Expenses", "Travel Expenses"];
+            var yValues = [document.getElementById("home_rent_expenses").value, document.getElementById("food_expenses_value").value, 
+                        document.getElementById("travel_expense_value").value];
+            var barColors = [
+                "#b91d47",
+                "#00aba9",
+                "#2b5797",
+                "#e8c3b9",
+                "#1e7145"
+            ];
+
+            new Chart("myChart2", {
                 type: "bar",
                 data: {
                     labels: xValues,
@@ -58,11 +115,14 @@
                 options: {
                     title: {
                         display: true,
-                        text: "World Wide Wine Production 2018"
+                        text: "Savings and Expenses"
                     }
                 }
             });
         }
+
+
+
     </script>
 
 </body>

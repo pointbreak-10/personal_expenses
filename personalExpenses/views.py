@@ -2,10 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.db import IntegrityError
-from personalExpenses import data_storage
-from plotly.offline import plot
-import plotly.graph_objects as go
-#from sqlite3 import IntegrityError
+from personalExpenses import data_storage, password
+
 # Create your views here.
 def home(request):
     return render(request,'personalExpenses/home.html')
@@ -30,20 +28,23 @@ def signUpUser(request):
         
         if request.POST['password1'] == request.POST['password2']:
             try:
-                user = User.objects.create_user(username=request.POST['username'], password=request.POST['password1'])
-                
-                data = {'name': request.POST['username'], 'occupation':request.POST['occupation']}
-                data_storage.jsonDB(data)
-                user.save()
-                login(request, user)
-                return redirect('dashboard')
+                #check the password
+                if(password.check(request.POST['password1'])):
+                    user = User.objects.create_user(username=request.POST['username'], email=request.POST['email'], password=request.POST['password1'])
+                    #data = {'name': request.POST['username'], 'occupation':request.POST['occupation']}
+                    #data_storage.jsonDB(data)
+                    user.save()
+                    login(request, user)
+                    return redirect('dashboard')
+                else:
+                    return render(request,'personalExpenses/signUp.html',{'error':'Password must contain an Uppercase, a lower case and a number!'})
             except IntegrityError:
-                return render(request,'personalExpenses/signUp.html',{'error':'Sorry the user name is already taken'})
+                return render(request,'personalExpenses/signUp.html',{'error':'Sorry the user name is already taken!'})
             except ValueError:
-                return render(request,'personalExpenses/signUp.html',{'error':'Please enter valid username or password'})
+                return render(request,'personalExpenses/signUp.html',{'error':'Please enter valid username or password!'})
         
         else:
-            return render(request,'personalExpenses/signUp.html',{'error':'The password entered do not match'})
+            return render(request,'personalExpenses/signUp.html',{'error':'The password entered do not match!'})
             
 
 def logOut(request):
