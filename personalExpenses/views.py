@@ -61,5 +61,5 @@ def dashboard(request):
     else:
         xValue = ["Monthly Expenses", "Monthly Savings"]
         yValue = [request.POST['monthly_expenses'], request.POST['monthly_savings']]
-        plot_div = go.Pie(labels=xValue, values=yValue)
+        #plot_div = go.Pie(labels=xValue, values=yValue)
         return render(request, 'personalExpenses/dashboard.html', {"labels": xValue, "data":yValue})
