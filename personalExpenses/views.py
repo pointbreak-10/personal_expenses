@@ -3,7 +3,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from personalExpenses import data_storage, password
-
+from .models import userExpense
 # Create your views here.
 def home(request):
     return render(request,'personalExpenses/home.html')
@@ -55,11 +55,11 @@ def logOut(request):
 
 
 def dashboard(request):
+    data = userExpense.objects.filter(uid = request.user)
     if request.method == 'GET':
-        return render(request, 'personalExpenses/dashboard.html')
+        #exepnsedata = userExpense.objects.filter(user = request.user)
+        return render(request, 'personalExpenses/dashboard.html',{'data': data})
     
     else:
-        xValue = ["Monthly Expenses", "Monthly Savings"]
-        yValue = [request.POST['monthly_expenses'], request.POST['monthly_savings']]
-        #plot_div = go.Pie(labels=xValue, values=yValue)
-        return render(request, 'personalExpenses/dashboard.html', {"labels": xValue, "data":yValue})
+        
+        return render(request, 'personalExpenses/dashboard.html', {"data": data})
