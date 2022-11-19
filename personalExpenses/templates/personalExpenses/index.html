@@ -8,18 +8,25 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800&display=swap" rel="stylesheet">
     </head>
     <body>
+        <div class="error">
+            <h3>{{error}}</h3>
+        </div> <br> <br>
         <div class="cont">
             <div class="form sign-in">
-                <h2>Sign In</h2>
-                <label>
-                    <span>Username</span>
-                    <input type="text" name="username">
-                </label>
-                <label>
-                    <span>Password</span>
-                    <input type="password" name="password">
-                </label>
-                <button class="submit" type="button">Sign In</button>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <h2>Sign In</h2>
+                    <label>
+                        <span>Username</span>
+                        <input type="text" name="username">
+                    </label>
+                    <label>
+                        <span>Password</span>
+                        <input type="password" name="password">
+                    </label>
+                    <button class="submit" type="submit" name="signin">Sign In</button>
+                </form>
+                
                 <p class="forgot-pass">Forgot Password ?</p>
 
                 <div class="social-media">
@@ -48,28 +55,31 @@
                     </div>
                 </div>
                 <div class="form sign-up">
-                    <h2>Sign Up</h2>
-                    <label>
-                        <span>Name</span>
-                        <input type="text">
-                    </label>
-                    <label>
-                        <span>Username</span>
-                        <input type="text">
-                    </label>
-                    <label>
-                        <span>Email</span>
-                        <input type="email">
-                    </label>
-                    <label>
-                        <span>Password</span>
-                        <input type="password">
-                    </label>
-                    <label>
-                        <span>Confirm Password</span>
-                        <input type="password">
-                    </label>
-                    <button type="button" class="submit">Sign Up</button>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <h2>Sign Up</h2>
+                        <label>
+                            <span>Name</span>
+                            <input type="text" class="form-control" name="username" id="username" aria-describedby="usernamehelpertxt" required>
+                        </label>
+                        <label>
+                            <span>occupatiom</span>
+                            <input type="text" class="form-control" name="occupation" id="occupation">
+                        </label>
+                        <label>
+                            <span>Email</span>
+                            <input type="email" class="form-control" name="email" id="email" aria-describedby="emailhelpertext" required>
+                        </label>
+                        <label>
+                            <span>Password</span>
+                            <input type="password" class="form-control" name="password1" id="password1" required>
+                        </label>
+                        <label>
+                            <span>Confirm Password</span>
+                            <input type="password" class="form-control" name="password2" id="password2" required>
+                        </label>
+                        <button type="submit" class="submit" name="signup">Sign Up</button>
+                    </form>    
                 </div>
             </div>
         </div>

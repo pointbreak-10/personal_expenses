@@ -167,7 +167,8 @@
     top: 0;
     width: 900px;
     height: 100%;
-    background-image: url("{% static 'personalExpenses/images/bg.jpg' %}");
+    background-image: url('images/bg.jpg'); 
+    /* in css file only refer to the images directory to access a image, as both css file and images folder are within the same parent folder */
     background-size: cover;
     transition: -webkit-transform 1.2s ease-in-out;
     transition: transform 1.2s ease-in-out, -webkit-transform 1.2s ease-in-out;

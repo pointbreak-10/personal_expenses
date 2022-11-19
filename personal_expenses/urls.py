@@ -19,9 +19,9 @@ from personalExpenses import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
-    path('login/', views.loginUser, name='login'),
-    path('signUp/', views.signUpUser, name='signUp'),
+    path('', views.landing.as_view(), name='landing'),
+    # path('login/', views.loginUser, name='login'),
+    # path('signUp/', views.signUpUser, name='signUp'),
     path('dashboard/', views.dashboard, name='dashboard'),
     
 ]
