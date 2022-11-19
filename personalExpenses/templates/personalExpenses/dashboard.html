@@ -22,34 +22,55 @@
             {% csrf_token %}
             
             <label for="month">Data for Month:</label>
-            <select name="month" id="month">
-                <option value="January">January</option>
-                <option value="February">February</option>
-                <option value="March">March</option>
-                <option value="April">April</option>
-                <option value="May">May</option>
-                <option value="June">June</option>
-                <option value="July">July</option>
-                <option value="August">August</option>
-                <option value="September">September</option>
-                <option value="October">October</option>
-                <option value="November">November</option>
-                <option value="December">December</option>
+            <select name="month" id="month" >
+                <option value="January" {% if data.0 == 'January' %} selected {% endif %}>January</option>
+                <option value="February" {% if data.0 == 'February' %} selected {% endif %}>February</option>
+                <option value="March" {% if data.0 == 'March' %} selected {% endif %}>March</option>
+                <option value="April" {% if data.0 == 'April' %} selected {% endif%}>April</option>
+                <option value="May" {% if data.0 == 'May' %} selected {% endif %}>May</option>
+                <option value="June" {% if data.0 == 'June' %} selected {% endif %}>June</option>
+                <option value="July" {% if data.0 == 'July' %} selected {% endif %}>July</option>
+                <option value="August" {% if data.0 == 'August' %} selected {% endif %}>August</option>
+                <option value="September" {% if data.0 == 'September' %} selected {% endif %}>September</option>
+                <option value="October" {% if data.0 == 'October' %} selected {% endif %}>October</option>
+                <option value="November" {% if data.0 == 'November' %} selected {% endif %}>November</option>
+                <option value="December" {% if data.0 == 'December' %} selected {% endif %}>December</option>
             </select> <br>
 
             <label for="monthly_earning">Monthly Earnings</label>
-            <input type="number" name="monthly_earning" id="monthly_earning"><br>
+            <input type="number" name="monthly_earning" id="monthly_earning" value="{{ data.1 }}"><br>
             
             <label for="monthly_expenses">Monthly Expenses</label>
-            <input type="number" name="monthly_expenses" id="monthly_expenses"><br>
+            <input type="number" name="monthly_expenses" id="monthly_expenses" value="{{ data.2 }}" ><br>
             
             <label for="monthly_savings">Monthly Savings</label>
-            <input type="number" name="monthly_savings" id="monthly_savings"><br>
+            <input type="number" name="monthly_savings" id="monthly_savings" value="{{ data.3 }}"><br>
             <button type="submit">Save the data in database</button>
         </form>
         <button id="getChart1" onclick="display_chart1()">Get the visual</button><br>
         
         <canvas id="myChart1" style="width:50%;max-width:600px; height: 50%; max-height: 300px;"></canvas>
+
+        <!--script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+            crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+            $(document).on('submit', '#task-form', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "dashboard" %}',
+                    data:
+                    {
+                        task: $("#task").val(),
+                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                    },
+                    success: function () {
+                        alert('Saved');
+                    }
+                })
+            });
+        </script-->
 
     </div> <br><br>
     

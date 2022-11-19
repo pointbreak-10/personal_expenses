@@ -11,12 +11,12 @@
             {% csrf_token %}
             <div class="form-control">
                 <label for="username">What would like to be called?</label>
-                <input type="text" class="form-control" name="username" id="username" aria-describedby="usernamehelpertxt">
+                <input type="text" class="form-control" name="username" id="username" aria-describedby="usernamehelpertxt" required>
                 <small id="usernamehelpertxt">Please choose a unique username</small>
             </div>
             <div class="form-control">
                 <label for="email">How do we contact you?</label>
-                <input type="text" class="form-control" name="email" id="email" aria-describedby="emailhelpertext">
+                <input type="text" class="form-control" name="email" id="email" aria-describedby="emailhelpertext" required>
                 <small id="emailhelpertxt">Please enter a valid email</small>
             </div>
             <div class="form-control">
@@ -26,12 +26,12 @@
             </div>
             <div class="form-control">
                 <label for="password1">Choose a strong password</label>
-                <input type="password" class="form-control" name="password1" id="password1">
+                <input type="password" class="form-control" name="password1" id="password1" required>
         
             </div>
             <div class="form-control">
                 <label for="password2">Confirm your password</label>
-                <input type="password" class="form-control" name="password2" id="password2">
+                <input type="password" class="form-control" name="password2" id="password2" required>
             </div>
             <button type="submit" class="btn btn-primary">SignUp</button>
         </form>

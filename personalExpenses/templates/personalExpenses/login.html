@@ -11,10 +11,10 @@
         {% csrf_token %}
         <div>
             <label for="username">Enter username</label>
-            <input type="text" class="form-control" name="username" id="username" aria-describedby="usernamehelpertxt"> <br>
+            <input type="text" class="form-control" name="username" id="username" aria-describedby="usernamehelpertxt" required> <br>
 
             <label for="password">Enter password</label>
-            <input type="password" class="form-control" name="password" id="password"> <br>
+            <input type="password" class="form-control" name="password" id="password" required> <br>
             
         </div>
         <button type="submit">Login</button>

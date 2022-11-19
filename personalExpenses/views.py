@@ -61,5 +61,6 @@ def dashboard(request):
         return render(request, 'personalExpenses/dashboard.html',{'data': data})
     
     else:
-        
-        return render(request, 'personalExpenses/dashboard.html', {"data": data})
+        monthdata = [request.POST['month'], request.POST['monthly_earning'], request.POST['monthly_expenses'], request.POST['monthly_savings']]
+
+        return render(request, 'personalExpenses/dashboard.html', {"data": monthdata})
