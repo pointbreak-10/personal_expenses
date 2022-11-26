@@ -3,8 +3,9 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.views import View
-from personalExpenses import data_storage, password
+from personalExpenses import password
 from .models import userExpense
+from .forms import ExpenseForm
 # Create your views here.
 
 
@@ -32,8 +33,6 @@ class landing(View):
                     #check the password
                     if(password.check(request.POST['password1'])):
                         user = User.objects.create_user(username=request.POST['username'], email=request.POST['email'], password=request.POST['password1'])
-                        #data = {'name': request.POST['username'], 'occupation':request.POST['occupation']}
-                        #data_storage.jsonDB(data)
                         user.save()
                         login(request, user)
                         return redirect('dashboard')
@@ -48,21 +47,6 @@ class landing(View):
                 return render(request,'personalExpenses/index.html',{'error':'The password entered do not match!'})
             
         
-            
-
-# def loginUser(request):
-#     if request.method == 'GET':
-#         return render(request,'personalExpenses/index.html')
-#     else:
-         
-
-# def signUpUser(request):
-#     if request.method == 'GET':
-#         return render(request,'personalExpenses/index.html')
-#     else:
-        
-        
-
 def logOut(request):
     if request.method == 'POST':
         logout(request)
@@ -71,12 +55,25 @@ def logOut(request):
 
 
 def dashboard(request):
-    data = userExpense.objects.filter(uid = request.user)
+    
     if request.method == 'GET':
-        #exepnsedata = userExpense.objects.filter(user = request.user)
-        return render(request, 'personalExpenses/dashboard.html',{'data': data})
+        metrics = userExpense.objects.filter(user = request.user)
+        return render(request, 'personalExpenses/dashboard.html',{"form": ExpenseForm(), "data":metrics})
     
     else:
+        print("retrieve from dashboard")
         monthdata = [request.POST['month'], request.POST['monthly_earning'], request.POST['monthly_expenses'], request.POST['monthly_savings']]
 
+        try:
+            f = ExpenseForm(request.POST)
+            print("saving the data")
+            newExpense = f.save(commit=False)
+            newExpense.user = request.user
+            newExpense.save()
+            print("data saved")
+        except ValueError:
+            return render(request, 'personalExpenses/dashboard.html', {"data": monthdata, "error":'Data is invalid'})
+
+        print("sending back the data to dashboard")
         return render(request, 'personalExpenses/dashboard.html', {"data": monthdata})
+

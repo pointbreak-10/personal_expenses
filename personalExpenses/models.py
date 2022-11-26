@@ -2,20 +2,27 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
-class userExpense(models.Model):
-    uid = models.ForeignKey(User, on_delete = models.CASCADE, default = None)
-    January = models.JSONField(null=True)
-    February = models.JSONField(null=True)
-    March = models.JSONField(null=True)
-    April = models.JSONField(null=True)
-    May = models.JSONField(null=True)
-    June = models.JSONField(null=True)
-    July = models.JSONField(null=True)
-    August = models.JSONField(null=True)
-    September = models.JSONField(null=True)
-    October = models.JSONField(null=True)
-    November = models.JSONField(null=True)
-    December = models.JSONField(null=True)
-    
+
+class user(models.Model):
+    name = models.TextField(max_length=100)
+    email = models.EmailField()
+
     def __str__(self):
-        return self.uid
+        return self.name
+
+class userExpense(models.Model):
+    MONTH_CHOICES=[
+        ("JAN","January"),("FEB","February"),("MAR","March"),("APR","April"),("MAY","May"),("JUN","June"),("JUL","July"),("AUG","Aug"),
+        ("SEP","September"),("OCT","October"),("NOV","November"),("DEC","December")]
+
+    month = models.CharField(max_length=3, choices=MONTH_CHOICES, default="JAN")
+    monthly_expenses = models.PositiveIntegerField(default=0)
+    monthly_earning = models.PositiveIntegerField(default=0)
+    monthly_savings = models.PositiveIntegerField(default=0)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    def __str__(self):
+        return self.month
+
+
+
+

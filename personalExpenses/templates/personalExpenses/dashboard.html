@@ -15,12 +15,13 @@
 </head>
 <body>
     Welcome to dashboard
-
+    {{data.count}} <br>
+    {{error}} <br><br>
     <div class="earnings" style="border: 2px solid black;">
         <form action="" method="post"> 
             <h3>Savings and Expenses</h3>
             {% csrf_token %}
-            
+            <!-- {{form.as_p}} -->
             <label for="month">Data for Month:</label>
             <select name="month" id="month" >
                 <option value="January" {% if data.0 == 'January' %} selected {% endif %}>January</option>
@@ -38,39 +39,19 @@
             </select> <br>
 
             <label for="monthly_earning">Monthly Earnings</label>
-            <input type="number" name="monthly_earning" id="monthly_earning" value="{{ data.1 }}"><br>
+            <input type="number" name="monthly_earning" id="monthly_earning" {% if data.1 != None %}value="{{ data.1 }}" {% endif %}><br>
             
             <label for="monthly_expenses">Monthly Expenses</label>
-            <input type="number" name="monthly_expenses" id="monthly_expenses" value="{{ data.2 }}" ><br>
+            <input type="number" name="monthly_expenses" id="monthly_expenses" {% if data.1 != None %} value="{{ data.2 }}" {% endif %}><br>
             
             <label for="monthly_savings">Monthly Savings</label>
-            <input type="number" name="monthly_savings" id="monthly_savings" value="{{ data.3 }}"><br>
+            <input type="number" name="monthly_savings" id="monthly_savings" {% if data.1 != None %} value="{{ data.3 }}" {% endif %}><br>
             <button type="submit">Save the data in database</button>
         </form>
         <button id="getChart1" onclick="display_chart1()">Get the visual</button><br>
         
         <canvas id="myChart1" style="width:50%;max-width:600px; height: 50%; max-height: 300px;"></canvas>
 
-        <!--script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-            crossorigin="anonymous"></script>
-
-        <script type="text/javascript">
-            $(document).on('submit', '#task-form', function (e) {
-                e.preventDefault();
-                $.ajax({
-                    type: 'POST',
-                    url: '{% url "dashboard" %}',
-                    data:
-                    {
-                        task: $("#task").val(),
-                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-                    },
-                    success: function () {
-                        alert('Saved');
-                    }
-                })
-            });
-        </script-->
 
     </div> <br><br>
     
