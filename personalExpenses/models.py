@@ -16,9 +16,9 @@ class userExpense(models.Model):
         ("SEP","September"),("OCT","October"),("NOV","November"),("DEC","December")]
 
     month = models.CharField(max_length=3, choices=MONTH_CHOICES, default="JAN")
-    monthly_expenses = models.PositiveIntegerField(default=0)
-    monthly_earning = models.PositiveIntegerField(default=0)
-    monthly_savings = models.PositiveIntegerField(default=0)
+    monthly_expenses = models.IntegerField(default=0)
+    monthly_earning = models.IntegerField(default=0)
+    monthly_savings = models.IntegerField(default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     def __str__(self):
         return self.month

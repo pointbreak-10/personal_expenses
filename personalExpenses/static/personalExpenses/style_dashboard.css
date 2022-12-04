@@ -1,0 +1,98 @@
+/*------Dashboard------*/
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
+.sidenav {
+    position: fixed;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background: black;
+    transition: all .5s ease;
+}
+
+.sidenav header {
+    font-size: 22px;
+    background-color: rgb(11, 13, 43);
+    color: white;
+    text-align: center;
+    line-height: 50px;
+    user-select: none;
+}
+
+.sidenav ul a {
+    display: block;
+    height: 100%;
+    width: 100%;
+    line-height: 40px;
+    font-size: 20px;
+    color: aliceblue;
+    padding-left: 20px;
+    box-sizing: border-box;
+    border-bottom: 1px solid rgba(6, 119, 129, 0.437);
+    transition: .5s;
+}
+
+.sidenav ul a:hover {
+    padding-left: 40px;
+}
+
+#check {
+    display: none;
+}
+
+label #btn, label #cross {
+    position: absolute;
+    cursor: pointer;
+    border-radius: 3px;
+    color: white;
+}
+
+label #btn {
+    left: 10px;
+    padding: 6px 10px;
+    top: 25px;
+    background: black;
+    transition: all .5s ease;
+}
+
+label #cross {
+    z-index: 1111;
+    left: -195px;
+    top: 10px;
+    padding: 4px 9px;
+    background-color: rgb(11, 13, 43);
+    transition: all .5s ease;
+}
+
+#check:checked~.sidenav {
+    left: 0;
+}
+
+#check:checked~label #btn {
+    left: 250px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#check:checked~label #cross {
+    left: 195px;
+}
+
+#check:checked~ .content{
+    margin-left: 250px;
+}
+
+.content{
+    transition: all .5s ease;
+    padding:25px;
+}
+.content header{
+    padding-left: 50px;
+    font-size: 30px;
+}

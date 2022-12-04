@@ -9,161 +9,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{% static 'personalExpenses/functions.js' %}"></script> 
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="{% static 'personalExpenses/style_dashboard.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
     <title>Dashboard</title>
 </head>
 <body>
-    Welcome to dashboard
-    {{data.count}} <br>
-    {{error}} <br><br>
-    <div class="earnings" style="border: 2px solid black;">
-        <form action="" method="post"> 
-            <h3>Savings and Expenses</h3>
-            {% csrf_token %}
-            <!-- {{form.as_p}} -->
-            <label for="month">Data for Month:</label>
-            <select name="month" id="month" >
-                <option value="January" {% if data.0 == 'January' %} selected {% endif %}>January</option>
-                <option value="February" {% if data.0 == 'February' %} selected {% endif %}>February</option>
-                <option value="March" {% if data.0 == 'March' %} selected {% endif %}>March</option>
-                <option value="April" {% if data.0 == 'April' %} selected {% endif%}>April</option>
-                <option value="May" {% if data.0 == 'May' %} selected {% endif %}>May</option>
-                <option value="June" {% if data.0 == 'June' %} selected {% endif %}>June</option>
-                <option value="July" {% if data.0 == 'July' %} selected {% endif %}>July</option>
-                <option value="August" {% if data.0 == 'August' %} selected {% endif %}>August</option>
-                <option value="September" {% if data.0 == 'September' %} selected {% endif %}>September</option>
-                <option value="October" {% if data.0 == 'October' %} selected {% endif %}>October</option>
-                <option value="November" {% if data.0 == 'November' %} selected {% endif %}>November</option>
-                <option value="December" {% if data.0 == 'December' %} selected {% endif %}>December</option>
-            </select> <br>
-
-            <label for="monthly_earning">Monthly Earnings</label>
-            <input type="number" name="monthly_earning" id="monthly_earning" {% if data.1 != None %}value="{{ data.1 }}" {% endif %}><br>
-            
-            <label for="monthly_expenses">Monthly Expenses</label>
-            <input type="number" name="monthly_expenses" id="monthly_expenses" {% if data.1 != None %} value="{{ data.2 }}" {% endif %}><br>
-            
-            <label for="monthly_savings">Monthly Savings</label>
-            <input type="number" name="monthly_savings" id="monthly_savings" {% if data.1 != None %} value="{{ data.3 }}" {% endif %}><br>
-            <button type="submit">Save the data in database</button>
-        </form>
-        <button id="getChart1" onclick="display_chart1()">Get the visual</button><br>
+    <div class="body">
+        <input type="checkbox" name="" id="check">
+        <label for="check">
+            <i class="material-icons" id="btn">menu</i>
+            <i class="material-icons" id="cross">cancel</i>
+        </label>
+        <div class="sidenav">
+            <header>Hi there!</header>
+            <ul>
+                <li><a href="">Dashboard</a></li>
+                <li><a href="">Profile</a></li>
+                <li><a href="">Contact Us</a></li>
+                <li><a href="">logout</a></li>
+            </ul>
+        </div>
         
-        <canvas id="myChart1" style="width:50%;max-width:600px; height: 50%; max-height: 300px;"></canvas>
-
-
-    </div> <br><br>
-    
-    <div class="detailed_expenses" style="border: 2px solid black;">
-        <!-- for detailed  monthly exepnses-->
-        <h3>Detailed Expenses</h3>
-        {% csrf_token %}
-        <h5>Select the applicable field and add the value next to it</h5>
+        <div class="content">
+            <header>Welcome to dashboard</header> 
+            <!--{{yearData.count}}--> <br>
+            {{error}} <br><br>
+            <div class="earnings" style="border: 2px solid black;">
+                <form action="" method="post">
+                    <h3>Savings and Expenses</h3>
+                    {% csrf_token %}
+                    <label for="month">Data for Month:</label>
+                    <select name="month" id="month">
+                        <option value="JAN" {% if data.0 == 'JAN' %} selected {% endif %}>January</option>
+                        <option value="FEB" {% if data.0 == 'FEB' %} selected {% endif %}>February</option>
+                        <option value="MAR" {% if data.0 == 'MAR' %} selected {% endif %}>March</option>
+                        <option value="APR" {% if data.0 == 'APR' %} selected {% endif%}>April</option>
+                        <option value="MAY" {% if data.0 == 'MAY' %} selected {% endif %}>May</option>
+                        <option value="JUN" {% if data.0 == 'JUN' %} selected {% endif %}>June</option>
+                        <option value="JUL" {% if data.0 == 'JUL' %} selected {% endif %}>July</option>
+                        <option value="AUG" {% if data.0 == 'AUG' %} selected {% endif %}>August</option>
+                        <option value="SEP" {% if data.0 == 'SEP' %} selected {% endif %}>September</option>
+                        <option value="OCT" {% if data.0 == 'OCT' %} selected {% endif %}>October</option>
+                        <option value="NOV" {% if data.0 == 'NOV' %} selected {% endif %}>November</option>
+                        <option value="DEC" {% if data.0 == 'DEC' %} selected {% endif %}>December</option>
+                    </select> <br>
         
-        <label for="home_rent">Home Rent</label>
-        <input type="number" name="home_rent" id="home_rent"><br>
+                    <label for="monthly_earning">Monthly Earnings</label>
+                    <input type="number" name="monthly_earning" id="monthly_earning" {% if data.1 != None %}value="{{ data.1 }}"
+                        {% endif %}><br>
         
-        <label for="food_expenses">Food Expenses</label>
-        <input type="number" name="food_expenses" id="food_expenses"><br>
-
-        <label for="travel_expenses">Travel Expenses</label>
-        <input type="number" name="travel_expenses" id="travel_expenses"><br>
-
-        <button id="getChart2" onclick="display_chart2()">Get the visual</button><br>
-        <canvas id="myChart2" style="width:50%;max-width:600px; height: 50%; max-height: 300px;"></canvas>
-
-    </div> <br><br>
-
-    <div class="yearly_insight" style="border: 2px solid black;">
-        <!-- for yearly insight for the expenses, income and savings exepnses -->
-        <h3>Detailed Expenses</h3>
-        {% csrf_token %}
+                    <label for="monthly_expenses">Monthly Expenses</label>
+                    <input type="number" name="monthly_expenses" id="monthly_expenses" {% if data.1 != None %}
+                        value="{{ data.2 }}" {% endif %}><br>
         
-        <canvas id="myChart3" style="width:50%;max-width:600px; height: 50%; max-height: 300px;"></canvas>
-
-        <script>
-            // only for yearly_insight, do not include any other scripts here
-            //list = 
-
-        </script>
-
+                    <label for="monthly_savings">Monthly Savings</label>
+                    <input type="number" name="monthly_savings" id="monthly_savings" {% if data.1 != None %}
+                        value="{{ data.3 }}" {% endif %}><br>
+                    <button type="submit">Save the data in database</button>
+                </form>
+                <button id="getChart1" onclick="display_chart1()">Get the visual</button><br>
+        
+                <canvas id="myChart1" style="width:50%;max-width:600px; height: 50%; max-height: 300px;"></canvas>
+        
+            </div> <br><br>
+        
+            <div class="detailed_expenses" style="border: 2px solid black;">
+                <!-- for detailed  monthly exepnses-->
+                <h3>Detailed Expenses</h3>
+                {% csrf_token %}
+                <h5>Select the applicable field and add the value next to it</h5>
+        
+                <label for="home_rent">Home Rent</label>
+                <input type="number" name="home_rent" id="home_rent"><br>
+        
+                <label for="food_expenses">Food Expenses</label>
+                <input type="number" name="food_expenses" id="food_expenses"><br>
+        
+                <label for="travel_expenses">Travel Expenses</label>
+                <input type="number" name="travel_expenses" id="travel_expenses"><br>
+        
+                <button id="getChart2" onclick="display_chart2()">Get the visual</button><br>
+                <canvas id="myChart2" style="width:50%;max-width:600px; height: 50%; max-height: 300px;"></canvas>
+        
+            </div> <br><br>
+        
+            <div class="yearly_insight" style="border: 2px solid black;">
+                <!-- for yearly insight for the expenses, income and savings exepnses -->
+                <h3>Detailed Expenses</h3>
+                {% csrf_token %}
+        
+                <canvas id="myChart3" style="width:50%;max-width:600px; height: 50%; max-height: 300px;"></canvas>
+            </div>
+        </div>
     </div>
-
-
-
-    <!--script> 
-         commenting out as this will serve as backup in case js file gets messed up later, to be cleared when all the functionality
-         of dashboard is done
-        function display_chart1(){
-            var xValues = ["Monthly Expenses", "Monthly Savings"];
-            var yValues = [document.getElementById("monthly_expenses").value, document.getElementById("monthly_savings").value];
-            var barColors = [
-                "#b91d47",
-                "#00aba9",
-                "#2b5797",
-                "#e8c3b9",
-                "#1e7145"
-            ];
-
-            new Chart("myChart1", {
-                type: "doughnut",
-                data: {
-                    labels: xValues,
-                    datasets: [{
-                        backgroundColor: barColors,
-                        data: yValues
-                    }]
-                },
-                options: {
-                    title: {
-                        display: true,
-                        text: "Savings and Expenses"
-                    }
-                }
-            });
-        }
-
-        function display_chart2(){
-            var xValues = ["Home Rent", "Food Expenses", "Travel Expenses"];
-            var yValues = [document.getElementById("home_rent").value, document.getElementById("food_expenses").value, 
-                        document.getElementById("travel_expenses").value];
-            var barColors = [
-                "#b91d47",
-                "#00aba9",
-                "#2b5797",
-                "#e8c3b9",
-                "#1e7145"
-            ];
-
-            new Chart("myChart2", {
-                type: "bar",
-                data: {
-                    labels: xValues,
-                    datasets: [{
-                        backgroundColor: barColors,
-                        data: yValues
-                    }]
-                }
-            });
-        }
-
-
-
-    </script-->
 
 </body>
 </html>
-
-
-<!--
-
-    1. items in which the expenses were made
-    2. additional income
-    3. type of income(acquired or earned)
-    4. expenses in different currencies, if any
-    4. exchange rate
-
-
-
--->

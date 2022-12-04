@@ -55,25 +55,31 @@ def logOut(request):
 
 
 def dashboard(request):
-    
+    yearData = userExpense.objects.filter(user = request.user)
+    print(yearData)
     if request.method == 'GET':
-        metrics = userExpense.objects.filter(user = request.user)
-        return render(request, 'personalExpenses/dashboard.html',{"form": ExpenseForm(), "data":metrics})
+        return render(request, 'personalExpenses/dashboard.html',{"form": ExpenseForm(), "yearData":yearData})
     
     else:
         print("retrieve from dashboard")
         monthdata = [request.POST['month'], request.POST['monthly_earning'], request.POST['monthly_expenses'], request.POST['monthly_savings']]
+        if request.POST['month'] not in yearData:
+            try:
+                f = ExpenseForm(request.POST)
+                print("saving the data")
+                if f.is_valid():
+                    newExpense = f.save(commit=False)
+                    newExpense.user = request.user
+                    newExpense.save()
+                    print("data saved")
+                else:
+                    print(f.errors)
+            except ValueError:
+                return render(request, 'personalExpenses/dashboard.html', {"data": monthdata, "error":'Data is invalid'})
 
-        try:
-            f = ExpenseForm(request.POST)
-            print("saving the data")
-            newExpense = f.save(commit=False)
-            newExpense.user = request.user
-            newExpense.save()
-            print("data saved")
-        except ValueError:
-            return render(request, 'personalExpenses/dashboard.html', {"data": monthdata, "error":'Data is invalid'})
-
-        print("sending back the data to dashboard")
-        return render(request, 'personalExpenses/dashboard.html', {"data": monthdata})
+            print("sending back the data to dashboard")
+            return render(request, 'personalExpenses/dashboard.html', {"data": monthdata, "yearData":yearData})
+        
+        else:
+             return render(request, 'personalExpenses/dashboard.html', {"data": monthdata, "yearData":yearData, "error":"Month data already exists, please change the value",})
 
