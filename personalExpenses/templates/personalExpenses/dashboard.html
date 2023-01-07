@@ -24,10 +24,10 @@
         <div class="sidenav">
             <header>Hi there!</header>
             <ul>
-                <li><a href="">Dashboard</a></li>
-                <li><a href="">Profile</a></li>
-                <li><a href="">Contact Us</a></li>
-                <li><a href="">logout</a></li>
+                <li><button onclick="">Dashboard</button></li>
+                <li><button onclick="">Profile</button></li>
+                <li><button onclick="">Contact Us</button></li>
+                <li><button onclick="">logout</button></li>
             </ul>
         </div>
         
@@ -35,6 +35,9 @@
             <header>Welcome to dashboard</header> 
             <!--{{yearData.count}}--> <br>
             {{error}} <br><br>
+
+            <!--iframe src="https://www.w3schools.com/tags/tag_button.asp" frameborder="0"> dashboard</iframe-->
+
             <div class="earnings" style="border: 2px solid black;">
                 <form action="" method="post">
                     <h3>Savings and Expenses</h3>
@@ -98,8 +101,11 @@
                 <!-- for yearly insight for the expenses, income and savings exepnses -->
                 <h3>Detailed Expenses</h3>
                 {% csrf_token %}
-        
-                <canvas id="myChart3" style="width:50%;max-width:600px; height: 50%; max-height: 300px;"></canvas>
+                <input type="hidden" id="year_data" value="{{ yearData }}">
+                <button id="getChart3" onclick="display_chart3()">Get the visual</button><br>
+                <canvas id="myChart3" style="width:50%;max-width:1200px; height: 50%; max-height: 600px;"></canvas>
+                
+                
             </div>
         </div>
     </div>

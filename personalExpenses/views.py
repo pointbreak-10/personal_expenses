@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
@@ -6,9 +7,6 @@ from django.views import View
 from personalExpenses import password
 from .models import userExpense
 from .forms import ExpenseForm
-# Create your views here.
-
-
 
 class landing(View):
     
@@ -55,15 +53,22 @@ def logOut(request):
 
 
 def dashboard(request):
-    yearData = userExpense.objects.filter(user = request.user)
-    print(yearData)
+    yearData = list(userExpense.objects.filter(user = request.user))
+    finaldata = []
+    for i in yearData:
+        finaldata.append([i.month, i.monthly_earning, i.monthly_expenses, i.monthly_savings])
+
+    finaldata = json.dumps(finaldata)
+    print(finaldata)
     if request.method == 'GET':
-        return render(request, 'personalExpenses/dashboard.html',{"form": ExpenseForm(), "yearData":yearData})
+        return render(request, 'personalExpenses/dashboard.html',{"form": ExpenseForm(), "yearData":finaldata})
     
     else:
         print("retrieve from dashboard")
         monthdata = [request.POST['month'], request.POST['monthly_earning'], request.POST['monthly_expenses'], request.POST['monthly_savings']]
+
         if request.POST['month'] not in yearData:
+            
             try:
                 f = ExpenseForm(request.POST)
                 print("saving the data")
@@ -73,13 +78,12 @@ def dashboard(request):
                     newExpense.save()
                     print("data saved")
                 else:
-                    print(f.errors)
+                    return render(request, 'personalExpenses/dashboard.html', {"data": monthdata, "error": f.errors})
             except ValueError:
                 return render(request, 'personalExpenses/dashboard.html', {"data": monthdata, "error":'Data is invalid'})
 
             print("sending back the data to dashboard")
-            return render(request, 'personalExpenses/dashboard.html', {"data": monthdata, "yearData":yearData})
+            return render(request, 'personalExpenses/dashboard.html', {"data": monthdata, "yearData":finaldata})
         
         else:
-             return render(request, 'personalExpenses/dashboard.html', {"data": monthdata, "yearData":yearData, "error":"Month data already exists, please change the value",})
-
+             return render(request, 'personalExpenses/dashboard.html', {"data": monthdata, "yearData":finaldata, "error":"Month data already exists, please change the value",})

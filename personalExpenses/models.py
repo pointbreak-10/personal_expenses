@@ -15,7 +15,7 @@ class userExpense(models.Model):
         ("JAN","January"),("FEB","February"),("MAR","March"),("APR","April"),("MAY","May"),("JUN","June"),("JUL","July"),("AUG","Aug"),
         ("SEP","September"),("OCT","October"),("NOV","November"),("DEC","December")]
 
-    month = models.CharField(max_length=3, choices=MONTH_CHOICES, default="JAN")
+    month = models.CharField(max_length=3, choices=MONTH_CHOICES, default="JAN", unique=True)
     monthly_expenses = models.IntegerField(default=0)
     monthly_earning = models.IntegerField(default=0)
     monthly_savings = models.IntegerField(default=0)

@@ -25,20 +25,22 @@
     user-select: none;
 }
 
-.sidenav ul a {
+.sidenav ul button {
     display: block;
     height: 100%;
     width: 100%;
     line-height: 40px;
     font-size: 20px;
-    color: aliceblue;
+    background-color: black;
+    color: rgb(240, 255, 248);
+    cursor: pointer;
     padding-left: 20px;
     box-sizing: border-box;
     border-bottom: 1px solid rgba(6, 119, 129, 0.437);
     transition: .5s;
 }
 
-.sidenav ul a:hover {
+.sidenav ul button:hover {
     padding-left: 40px;
 }
 
